@@ -88,3 +88,25 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+
+
+#
+#
+#
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+.envs/*
+!.envs/.local/
+!.env.local
+
+### tmp
+tmp/
+input/
+output/

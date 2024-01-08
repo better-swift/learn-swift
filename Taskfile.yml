@@ -1,0 +1,91 @@
+version: "3"
+
+includes:
+  swift101:
+    aliases: ["101"]
+    taskfile: packages/swift-101/
+    dir: packages/swift-101/
+    optional: true
+
+  py101:
+    taskfile: packages/py-101/
+    dir: packages/py-101/
+    optional: true
+
+  try:
+    aliases: ["t"]
+    taskfile: packages/try/
+    dir: packages/try/
+    optional: true
+
+################################################################################################
+
+#
+# global vars: https://taskfile.dev/#/usage?id=variables
+#
+vars:
+  VAR1: "some-var"
+
+# global env:
+env:
+  ENV1: testing
+
+# env file:
+dotenv:
+  - .env
+
+################################################################################################
+
+tasks:
+  doctor:
+    aliases: ["d"]
+    cmds:
+      - swift --version
+      - xcodebuild -version
+
+  init:env:
+    cmds:
+      - cp .env.local .env
+
+  ##################################################################################################
+
+  #
+  # usage:
+  #   - task n -- py-try/try-jieba
+  #
+  new:
+    aliases: ["n"]
+    cmds:
+      - swift package {{.CLI_ARGS}}
+    dir: packages/
+
+  ##################################################################################################
+
+  quick:
+    aliases: ["q"]
+    cmds:
+      - task: cc
+      - task: push
+
+  cc:
+    cmds:
+      - task: commit
+      - task: commit
+
+  commit:
+    aliases: ["c"]
+    cmds:
+      - git add .
+      - |
+        git commit -m "chore: update"
+    ignore_error: true
+
+  pull:
+    cmds:
+      - git config pull.rebase false
+      - git pull origin main
+
+  push:
+    cmds:
+      - git push origin main --tags
+      - repo_url=`git remote -v | grep push | awk -F ":" '{print $2}' | awk -F ".git" '{print "https://github.com/"$1}'`; open $repo_url
