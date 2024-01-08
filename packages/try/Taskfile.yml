@@ -1,0 +1,15 @@
+version: "3"
+
+includes:
+  hello:
+    aliases: ["h"]
+    taskfile: try-hello/
+    dir: try-hello/
+    optional: true
+
+################################################################################################
+
+tasks:
+  echo:
+    cmds:
+      - echo {{.CLI_ARGS}}

@@ -1,0 +1,15 @@
+version: "3"
+
+includes:
+  try:
+    aliases: ["t"]
+    taskfile: packages/try/
+    dir: packages/try/
+    optional: true
+
+################################################################################################
+
+tasks:
+  echo:
+    cmds:
+      - echo {{.CLI_ARGS}}

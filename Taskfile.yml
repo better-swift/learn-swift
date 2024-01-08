@@ -2,17 +2,12 @@ version: "3"
 
 includes:
   swift101:
-    aliases: ["101"]
+    aliases: ["s"]
     taskfile: packages/swift-101/
     dir: packages/swift-101/
     optional: true
 
-  py101:
-    taskfile: packages/py-101/
-    dir: packages/py-101/
-    optional: true
-
-  try:
+  t:
     aliases: ["t"]
     taskfile: packages/try/
     dir: packages/try/
@@ -56,8 +51,24 @@ tasks:
   new:
     aliases: ["n"]
     cmds:
-      - swift package {{.CLI_ARGS}}
+      - echo {{.CLI_ARGS}}
+      - mkdir -p {{.CLI_ARGS}}
+      - touch {{.CLI_ARGS}}/Taskfile.yml
+      - swift help package init
+      - swift package init --package-path={{.CLI_ARGS}} --type=executable
     dir: packages/
+
+  help:
+    aliases: ["h"]
+    cmds:
+      - swift help {{.CLI_ARGS}}
+
+  new:project:
+    aliases: ["np"]
+    cmds:
+      - echo {{.CLI_ARGS}}
+      - mkdir -p {{.CLI_ARGS}}
+    ignore_error: true
 
   ##################################################################################################
 
